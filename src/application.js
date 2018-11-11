@@ -6,6 +6,7 @@ let EventEmitter = require('events');
 
 class Application extends EventEmitter {
   constructor() {
+    super();
     this.callbackFunc;
   }
   listen(port) {
@@ -16,9 +17,9 @@ class Application extends EventEmitter {
     this.callbackFunc = fn;
   }
   createContext(req, res) {
-    let ctx = Object.create(this.context);
-    ctx.request = Object.create(this.request);
-    ctx.response = Object.create(this.response);
+    let ctx = Object.create(this.context || context);
+    ctx.request = Object.create(this.request || request);
+    ctx.response = Object.create(this.response || response);
     ctx.req = ctx.request.req = req;
     ctx.res = ctx.response.res = res;
     return ctx;
