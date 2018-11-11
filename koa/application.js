@@ -1,4 +1,7 @@
 let http = require('http');
+let context = require('./context');
+let request = require('./request');
+let response = require('./response');
 
 class Application {
   constructor() {
@@ -15,6 +18,14 @@ class Application {
     return (req, res) => {
       this.callbackFunc(req, res);
     }
+  }
+  createContext(req, res) {
+    let ctx = Object.create(this.context);
+    ctx.request = Object.create(this.request);
+    ctx.response = Object.create(this.response);
+    ctx.req = ctx.request.req = req;
+    ctx.res = ctx.response.res = res;
+    return ctx;
   }
 }
 
