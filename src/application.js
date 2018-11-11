@@ -2,8 +2,9 @@ let http = require('http');
 let context = require('./context');
 let request = require('./request');
 let response = require('./response');
+let EventEmitter = require('events');
 
-class Application {
+class Application extends EventEmitter {
   constructor() {
     this.callbackFunc;
   }
@@ -46,7 +47,7 @@ class Application {
       let respond = () => this.responseBody(ctx);
       let onerror = err => this.onerror(err, ctx);
       let fn = this.compose();
-      return fn(ctx);
+      return fn(ctx).then(respond).catch(onerror);
     }
   }
 }

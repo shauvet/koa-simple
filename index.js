@@ -19,6 +19,10 @@ app.use(async (ctx, next) => {
   console.log(4);
 });
 
+app.on('error', err => {
+  console.log('error happens: ' + err.stack);
+});
+
 app.listen(3000, () => {
   console.log('listen on 3000');
 });
